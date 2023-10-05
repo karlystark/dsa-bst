@@ -18,8 +18,24 @@ class Node {
    * into the BST with value val. Returns the inserted node. Uses recursion. */
 
   insertRecursively(val) {
-
-
+    // base case: if next node we go to will be null; add ourselves
+    if (this.val > val) {
+      // check left
+      if (this.left === null) {
+        const newNode = new Node(val);
+        this.left = newNode;
+        return newNode;
+      }
+      this.left.insertRecursively(val);
+    } else {
+      // check right
+      if (this.right === null) {
+        const newNode = new Node(val);
+        this.right = newNode;
+        return newNode;
+      }
+      this.right.insertRecursively(val);
+    }
   }
 
   /** dfsPreOrder(): Traverse from the invoking node using pre-order DFS.
@@ -91,16 +107,46 @@ class BinarySearchTree {
 
   insertRecursively(val) {
     if (this.root === null) {
-      return 0;
+      this.root = new Node(val);
+      return this;
     }
-    return this.root.insertRecursively(val);
+    this.root.insertRecursively(val);
+    return this;
   }
 
   /** find(val): Search the BST for a node with value val.
    * Returns the node, if found; else undefined. Uses iteration. */
 
   find(val) {
+    let current = this.root;
+    let next = null;
 
+    if (this.root === null) { return }
+
+    if (current.val === val) {
+      return current;
+    }
+
+    if (current.val > val) {
+      next = current.left;
+    } else {
+      next = current.right;
+    }
+
+    while (next !== null) {
+      if (next.val === val) {
+        return next;
+      }
+
+      if (next.val > val) {
+        next = next.left;
+      } else {
+        next = next.right;
+      }
+    }
+
+    // we would be navigate to a null node so we didn't find it
+    return;
   }
 
   /** findRecursively(val): Search the BST for a node with value val.

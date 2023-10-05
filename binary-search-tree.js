@@ -11,6 +11,19 @@ class Node {
   * Returns the node, if found; else undefined. Uses recursion. */
 
   findRecursively(val) {
+    let next = null;
+
+    if (this.val === val) { return this; }
+
+    if (this.val > val) {
+      next= this.left;
+    } else {
+      next = this.right;
+    }
+
+    if (next === null) { return undefined; }
+
+    return next.findRecursively(val);
 
   }
 
@@ -74,7 +87,7 @@ class BinarySearchTree {
     let current = this.root;
     const newNode = new Node(val);
 
-    if(this.root === null){
+    if (this.root === null) {
       this.root = newNode;
       return this;
     }
@@ -121,7 +134,7 @@ class BinarySearchTree {
     let current = this.root;
     let next = null;
 
-    if (this.root === null) { return }
+    if (this.root === null) { return; }
 
     if (current.val === val) {
       return current;
@@ -153,7 +166,7 @@ class BinarySearchTree {
    * Returns the node, if found; else undefined. Uses recursion. */
 
   findRecursively(val) {
-
+    return this.root.findRecursively(val);
   }
 
   /** dfsPreOrder(): Traverse the BST using pre-order DFS.
